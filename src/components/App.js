@@ -90,7 +90,6 @@ function App() {
             <Contact />
           </Route>
           <Route exact path="/shop">
-            {/* get cart components from Shop */}
             <Shop addToCart={addToCart} />
           </Route>
           <Route exact path="/cart">
