@@ -1,11 +1,11 @@
 import React from 'react';
 import CartItem from './CartItem';
 
-const Cart = ({ countedCart, increaseCount, decreaseCount }) => {
+const Cart = ({ cart, increaseCount, decreaseCount, removeItem }) => {
   return (
     <div>
-      {countedCart.length !== 0
-        ? countedCart.map((cart) => {
+      {cart.length !== 0
+        ? cart.map((cart) => {
             return (
               <CartItem
                 key={cart.id}
@@ -16,6 +16,7 @@ const Cart = ({ countedCart, increaseCount, decreaseCount }) => {
                 id={cart.id}
                 increaseCount={increaseCount}
                 decreaseCount={decreaseCount}
+                removeItem={removeItem}
               />
             );
           })

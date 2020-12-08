@@ -27,7 +27,7 @@ const Shop = ({ addToCart }) => {
               description={item.description}
               price={item.price}
               //pass cart back up to app componment
-              addToCart={() => addToCart(item)}
+              addToCart={() => addToCart({ ...item, count: 1 })}
             />
           );
         })
