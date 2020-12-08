@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../css/App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -10,78 +10,78 @@ import Cart from './Cart';
 
 function App() {
   const [cart, setCart] = useState([]);
-  const [countedCart, setCountedCart] = useState([]);
-  const [totalItems, setTotalItems] = useState(0);
 
-  //get cart components from Shop
+  //get cart components from Shop and checks if it already exists in cart
   const addToCart = (item) => {
-    setCart([...cart, item]);
+    const result = cart.map((cartItem) => cartItem.id).includes(item.id);
+    //if item exists then increase count by 1
+    if (result) {
+      updateCount(item.id, 1);
+    } else {
+      // if item does not exist then add
+      setCart([...cart, item]);
+    }
+  };
+
+  const updateCount = (id, num) => {
+    setCart(
+      cart.map((cartItem) =>
+        cartItem.id === id
+          ? { ...cartItem, count: cartItem.count + num }
+          : cartItem
+      )
+    );
+  };
+
+  const removeItem = (id) => {
+    setCart(
+      //removes item from array that matches with id arg
+      cart.filter((cartItem) => {
+        return cartItem.id !== id;
+      })
+    );
   };
 
   const increaseCount = (id) => {
-    const result = [
-      ...countedCart[0].map((item) => {
-        if (item.id === id) {
+    setCart(
+      cart.map((cartItem) => {
+        if (cartItem.id === id) {
           return {
-            ...item,
-            count: item.count + 1,
+            ...cartItem,
+            count: cartItem.count + 1,
           };
         }
-        return {
-          ...item,
-        };
-      }),
-    ];
-    setCountedCart([result]);
+        return { ...cartItem };
+      })
+    );
   };
 
   const decreaseCount = (id) => {
-    const result = [
-      ...countedCart[0].map((item) => {
-        if (item.id === id) {
+    setCart(
+      cart.map((cartItem) => {
+        if (cartItem.id === id) {
+          if (cartItem.count === 1) {
+            setCart(
+              cart.filter((cItem) => {
+                return cItem.id !== id;
+              })
+            );
+          }
           return {
-            ...item,
-            count: item.count - 1,
+            ...cartItem,
+            count: cartItem.count - 1,
           };
         }
-        return {
-          ...item,
-        };
-      }),
-    ];
-    setCountedCart([result]);
+        return { ...cartItem };
+      })
+    );
   };
-
-  useEffect(() => {
-    //tallies count of each item and adds to countedCart
-    const result = [
-      ...cart
-        .reduce((acc, cur) => {
-          if (!acc.has(cur.id)) acc.set(cur.id, { ...cur, count: 0 });
-          acc.get(cur.id).count++;
-          return acc;
-        }, new Map())
-        .values(),
-    ];
-    setCountedCart([result]);
-  }, [cart]);
-
-  useEffect(() => {
-    let counter = 0;
-    countedCart.forEach((item) => {
-      item.forEach((element) => {
-        console.log('element render');
-        counter += element.count;
-      });
-    });
-    setTotalItems(counter);
-  }, [countedCart]);
 
   return (
     <div className="App">
-      {console.log(countedCart, 'app render')}
+      {console.log(cart, 'app render')}
       <Router>
-        <Nav totalItems={totalItems} />
+        <Nav cart={cart} />
         <Switch>
           <Route exact path="/">
             <Home />
@@ -95,8 +95,8 @@ function App() {
           </Route>
           <Route exact path="/cart">
             <Cart
-              countedCart={countedCart[0]}
-              setCountedCart={setCountedCart}
+              cart={cart}
+              removeItem={removeItem}
               increaseCount={increaseCount}
               decreaseCount={decreaseCount}
             />

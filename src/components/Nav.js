@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Nav.css';
 
-const Nav = ({ totalItems }) => {
+const Nav = ({ cart }) => {
+  const [cartTotal, setCartTotal] = useState(0);
+
+  useEffect(() => {
+    setCartTotal(
+      cart.reduce((acc, cur) => {
+        return acc + cur.count;
+      }, 0)
+    );
+  }, [cart]);
+
   return (
     <div className="nav-bar">
       <nav>
@@ -19,7 +29,8 @@ const Nav = ({ totalItems }) => {
           <Link to="/cart">
             <li>
               Cart
-              {totalItems !== 0 ? `(${totalItems})` : null}
+              {cartTotal !== 0 ? `(${cartTotal})` : null}
+              {/* {totalItems !== 0 ? `(${totalItems})` : null} */}
               {/* Cart {countedCart.length !== 0 ? `(${countedCart.length})` : null} */}
             </li>
           </Link>
