@@ -35,7 +35,7 @@ function App() {
 
   const removeItem = (id) => {
     setCart(
-      //removes item from array that matches with id arg
+      //removes item from array that matches with id argument
       cart.filter((cartItem) => {
         return cartItem.id !== id;
       })
@@ -45,13 +45,9 @@ function App() {
   const increaseCount = (id) => {
     setCart(
       cart.map((cartItem) => {
-        if (cartItem.id === id) {
-          return {
-            ...cartItem,
-            count: cartItem.count + 1,
-          };
-        }
-        return { ...cartItem };
+        return cartItem.id === id
+          ? { ...cartItem, count: cartItem.count + 1 }
+          : { ...cartItem };
       })
     );
   };
@@ -59,20 +55,12 @@ function App() {
   const decreaseCount = (id) => {
     setCart(
       cart.map((cartItem) => {
-        if (cartItem.id === id) {
-          if (cartItem.count === 1) {
-            setCart(
-              cart.filter((cItem) => {
-                return cItem.id !== id;
-              })
-            );
-          }
-          return {
-            ...cartItem,
-            count: cartItem.count - 1,
-          };
-        }
-        return { ...cartItem };
+        //matches id to decrease correct cartItem, does not let item count be less than 1
+        return cartItem.id === id && cartItem.count === 1
+          ? { ...cartItem }
+          : cartItem.id === id
+          ? { ...cartItem, count: cartItem.count - 1 }
+          : { ...cartItem };
       })
     );
   };

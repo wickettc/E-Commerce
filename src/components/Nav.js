@@ -30,8 +30,6 @@ const Nav = ({ cart }) => {
             <li>
               Cart
               {cartTotal !== 0 ? `(${cartTotal})` : null}
-              {/* {totalItems !== 0 ? `(${totalItems})` : null} */}
-              {/* Cart {countedCart.length !== 0 ? `(${countedCart.length})` : null} */}
             </li>
           </Link>
         </ul>
