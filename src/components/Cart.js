@@ -32,9 +32,11 @@ const Cart = ({ cart, cartInfo, increaseCount, decreaseCount, removeItem }) => {
       <div id="checkout-container">
         <div>Items in Cart: {cartInfo.itemsCount}</div>
         <div>Total: ${cartInfo.totalPrice.toFixed(2)} USD</div>
-        <Link to={'/checkout'}>
-          <button className="checkout-btn">Checkout</button>
-        </Link>
+        {cartInfo.itemsCount > 0 ? (
+          <Link to={'/checkout'}>
+            <button className="checkout-btn">Checkout</button>
+          </Link>
+        ) : null}
       </div>
     </div>
   );
