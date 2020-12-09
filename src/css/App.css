@@ -7,3 +7,31 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #766c7f;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin-top: 100px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+button {
+  background-color: #a3a5c3;
+  padding: 10px;
+  border-radius: 25%;
+  outline: none;
+  font-weight: 600;
+  cursor: pointer;
+}

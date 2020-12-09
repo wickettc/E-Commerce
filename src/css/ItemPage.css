@@ -1,0 +1,12 @@
+.item-page-container {
+  margin: 1% 25%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-page-img {
+  height: 50vh;
+  border-radius: 15%;
+}

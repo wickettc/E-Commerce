@@ -22,6 +22,7 @@ const Shop = ({ addToCart }) => {
           return (
             <ShopItem
               key={item.id}
+              id={item.id}
               title={item.title}
               image={item.image}
               description={item.description}

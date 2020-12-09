@@ -13,8 +13,8 @@ const CartItem = ({
 }) => {
   return (
     <div className="cart-item">
-      <h5>{title}</h5>
       <img src={image} alt={title} />
+      <h5>{title}</h5>
       <button onClick={() => decreaseCount(id)}>-</button>
       <div className="item-counter">{count}</div>
       <button onClick={() => increaseCount(id)}>+</button>

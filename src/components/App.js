@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -7,9 +7,25 @@ import Home from './Home';
 import Contact from './Contact';
 import Shop from './Shop';
 import Cart from './Cart';
+import ItemPage from './ItemPage';
+import Checkout from './Checkout';
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [cartInfo, setCartInfo] = useState({ itemsCount: 0, totalPrice: 0 });
+
+  useEffect(() => {
+    const count = cart.reduce((acc, cur) => {
+      return acc + cur.count;
+    }, 0);
+    const price = cart.reduce((acc, cur) => {
+      return acc + cur.count * cur.price;
+    }, 0);
+    setCartInfo({
+      itemsCount: count,
+      totalPrice: price,
+    });
+  }, [cart]);
 
   //get cart components from Shop and checks if it already exists in cart
   const addToCart = (item) => {
@@ -67,27 +83,37 @@ function App() {
 
   return (
     <div className="App">
-      {console.log(cart, 'app render')}
       <Router>
-        <Nav cart={cart} />
+        <Nav cartInfo={cartInfo} />
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/contact">
-            <Contact />
-          </Route>
-          <Route exact path="/shop">
-            <Shop addToCart={addToCart} />
-          </Route>
-          <Route exact path="/cart">
-            <Cart
-              cart={cart}
-              removeItem={removeItem}
-              increaseCount={increaseCount}
-              decreaseCount={decreaseCount}
-            />
-          </Route>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/contact" component={Contact} />
+          <Route
+            exact
+            path="/shop"
+            render={(props) => <Shop addToCart={addToCart} />}
+          />
+          <Route
+            exact
+            path="/cart"
+            render={(props) => (
+              <Cart
+                cart={cart}
+                cartInfo={cartInfo}
+                removeItem={removeItem}
+                increaseCount={increaseCount}
+                decreaseCount={decreaseCount}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/shop/:id"
+            render={({ props, match }) => (
+              <ItemPage match={match} addToCart={addToCart} />
+            )}
+          />
+          <Route exact path="/checkout" component={Checkout} />
         </Switch>
       </Router>
     </div>
