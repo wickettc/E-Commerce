@@ -1,28 +1,58 @@
 .nav-bar {
-  background-color: #766c7f;
+    background-color: #766c7f;
 }
 
 .nav-bar a {
-  color: white;
-  text-decoration: none;
-  font-size: 2rem;
-  font-weight: 800;
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 800;
 }
 
 .nav-bar a:hover {
-  color: #243e36;
+    color: #243e36;
 }
 
 nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 nav ul {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  list-style: none;
-  width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    width: 80%;
+}
+
+.nav-hamburger {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .nav-bar {
+        height: 50px;
+    }
+
+    .nav-hamburger {
+        display: block;
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        z-index: 20000;
+    }
+
+    nav ul {
+        flex-direction: column;
+        padding: 0;
+        background-color: #766c7f;
+        width: 100vw;
+        z-index: 1000;
+    }
+
+    .closed {
+        display: none;
+    }
 }
