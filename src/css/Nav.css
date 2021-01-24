@@ -34,6 +34,8 @@ nav ul {
 @media only screen and (max-width: 767px) {
     .nav-bar {
         height: 50px;
+        position: sticky;
+        top: 0;
     }
 
     .nav-hamburger {

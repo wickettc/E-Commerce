@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Nav.css';
 
 const Nav = ({ cartInfo }) => {
     const [closeNav, setCloseNav] = useState(true);
-
+    const navBar = useRef(null);
     const closed = closeNav ? 'closed' : '';
 
+    useEffect(() => {
+        function handleClick(e) {
+            if (!closeNav) {
+                if (navBar.current && !navBar.current.contains(e.target)) {
+                    setCloseNav(true);
+                }
+            }
+        }
+
+        document.addEventListener('click', handleClick);
+        return () => document.removeEventListener('click', handleClick);
+    }, [closeNav]);
+
     return (
-        <div className="nav-bar">
+        <div ref={navBar} className="nav-bar">
             <nav>
                 <div
                     className="nav-hamburger"
