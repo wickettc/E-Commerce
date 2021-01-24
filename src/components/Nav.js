@@ -23,16 +23,16 @@ const Nav = ({ cartInfo }) => {
                     </svg>
                 </div>
                 <ul className={`${closed}`}>
-                    <Link to="/">
+                    <Link onClick={() => setCloseNav(true)} to="/">
                         <li>Home</li>
                     </Link>
-                    <Link to="/contact">
+                    <Link onClick={() => setCloseNav(true)} to="/contact">
                         <li>Contact Us</li>
                     </Link>
-                    <Link to="/shop">
+                    <Link onClick={() => setCloseNav(true)} to="/shop">
                         <li>Shop</li>
                     </Link>
-                    <Link to="/cart">
+                    <Link onClick={() => setCloseNav(true)} to="/cart">
                         <li>
                             Cart
                             {cartInfo.itemsCount !== 0
